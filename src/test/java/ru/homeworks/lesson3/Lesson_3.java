@@ -22,6 +22,13 @@ public class Lesson_3 {
         System.out.println();
         System.out.println("Задание 6*");
         arrayMaxMin(10);
+        System.out.println();
+        System.out.println("Задание 7**");
+        System.out.println(checkBalance(1, 1, 1, 2, 1));
+        System.out.println();
+        System.out.println("Задание 8***");
+        int[] mas = {1,2,3,4,5,6};
+        System.out.println(Arrays.toString(arrayShift(mas,-2)));
     }
 
     //Задание 1
@@ -68,7 +75,7 @@ public class Lesson_3 {
             System.out.println(Arrays.toString(arr[i]));
         }
     }
-
+    //Задание 5
     private static int[] arraysMaker(int len,int initValue){
         int[] arr = new int[len];
         for (int i = 0; i < arr.length; i++) {
@@ -76,6 +83,7 @@ public class Lesson_3 {
         }
         return arr;
     }
+    //Задание 6*
     private static void arrayMaxMin(int len){
         int[] arr = new int[len];
         for (int i = 0; i < arr.length; i++) {
@@ -93,5 +101,70 @@ public class Lesson_3 {
             }
         }
         System.out.println("Максимум массива: "+max+"\nМинимум массива: "+min);
+    }
+    //Задание 7**
+    private static boolean checkBalance(int... arr){
+        int []a= new int[arr.length-1];
+        int []b= new int[arr.length-1];
+        int summLeft=arr[0];
+        int summRight=arr[arr.length-1];
+
+        //массив сумм слева
+        for (int i = 0; i < arr.length-1; i++) {
+            summLeft=summLeft+arr[i+1];
+            a[i]=summLeft;
+        }
+     //   System.out.println(Arrays.toString(a));
+
+        //массив сумм справа
+        for (int i=arr.length-1;i>0; i--) {
+            summRight=summRight+arr[i-1];
+            b[i-1]=summRight;
+        }
+        int index_i=0;
+                int index_j=0;
+    //    System.out.println(Arrays.toString(b));
+
+        //проверка равенства сумм и их соседство
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b.length; j++) {
+                if (a[i]==b[j]&&Math.abs(i-j)!=a.length-1){
+                    index_i=i;
+                    index_j=j;
+                    if(index_i+1==index_j-1){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    //задание 8***
+    private static int[] arrayShift(int[] arr,int n){
+        System.out.print(Arrays.toString(arr)+" => ");
+        if (n<0){
+        do{
+            int a=arr[0];
+            for (int i = 0; i < arr.length-1; i++) {
+                arr[i]=arr[i+1];
+            }
+            arr[arr.length-1]=a;
+           n++;
+        }while (n<0);
+        }
+
+        if (n>0){
+            do {
+                int a=arr[arr.length-1];
+                for (int i = arr.length-1; i > 0; i--) {
+                arr[i]=arr[i-1];
+            }
+                arr[0]=a;
+             n--;
+            }while (n>0);
+        }
+        return arr;
     }
 }
