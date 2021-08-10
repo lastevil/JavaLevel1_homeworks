@@ -2,9 +2,11 @@ package ru.homeworks.lesson3;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Lesson_3 {
     public static void main(String[] args) {
+        Scanner length = new Scanner(System.in);
         System.out.println("Задание 1");
         arraysReverse(8);
         System.out.println();
@@ -21,7 +23,8 @@ public class Lesson_3 {
         System.out.println(Arrays.toString(arraysMaker(6,7)));
         System.out.println();
         System.out.println("Задание 6*");
-        arrayMaxMin(10);
+        System.out.println("введите длинну массива: ");
+        arrayMaxMin(length.nextInt());
         System.out.println();
         System.out.println("Задание 7**");
         System.out.println(checkBalance(1, 1, 1, 2, 1));
@@ -85,6 +88,10 @@ public class Lesson_3 {
     }
     //Задание 6*
     private static void arrayMaxMin(int len){
+        if(len<1){
+            System.out.println("минимальное допустимое значение 1");
+            return;
+        }
         int[] arr = new int[len];
         for (int i = 0; i < arr.length; i++) {
             arr[i]=(int)Math.round(Math.random()*30-15);
