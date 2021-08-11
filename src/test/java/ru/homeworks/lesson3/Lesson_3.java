@@ -27,7 +27,7 @@ public class Lesson_3 {
         arrayMaxMin(length.nextInt());
         System.out.println();
         System.out.println("Задание 7**");
-        System.out.println(checkBalance(1, 1, 1, 2, 1));
+        System.out.println(checkBalance(1, 1, 1));
         System.out.println();
         System.out.println("Задание 8***");
         int[] mas = {1,2,3,4,5,6};
@@ -121,7 +121,7 @@ public class Lesson_3 {
             summLeft=summLeft+arr[i+1];
             a[i]=summLeft;
         }
-     //   System.out.println(Arrays.toString(a));
+   //     System.out.println(Arrays.toString(a));
 
         //массив сумм справа
         for (int i=arr.length-1;i>0; i--) {
@@ -130,12 +130,12 @@ public class Lesson_3 {
         }
         int index_i=0;
                 int index_j=0;
-    //    System.out.println(Arrays.toString(b));
+  //      System.out.println(Arrays.toString(b));
 
         //проверка равенства сумм и их соседство
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < b.length; j++) {
-                if (a[i]==b[j]&&Math.abs(i-j)!=a.length-1){
+                if (a.length>3 && a[i]==b[j]&&Math.abs(i-j)!=a.length-1){
                     index_i=i;
                     index_j=j;
                     if(index_i+1==index_j-1){
@@ -143,6 +143,17 @@ public class Lesson_3 {
                     } else {
                         return false;
                     }
+                }
+                else if (a.length==3 && a[i]==b[j]){
+                    index_i=i;
+                    index_j=j;
+                    if(index_i+1==index_j-1){
+                        return true;
+                    }
+                }
+                else if (a.length<3){
+                System.out.print("Слишком маленький массив: ");
+                return false;
                 }
             }
         }
