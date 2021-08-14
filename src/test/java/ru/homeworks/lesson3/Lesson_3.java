@@ -135,7 +135,7 @@ public class Lesson_3 {
         //проверка равенства сумм и их соседство
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < b.length; j++) {
-                if (a.length>3 && a[i]==b[j]&&Math.abs(i-j)!=a.length-1){
+                if ((a.length>3) && (a[i]==b[j])&&(Math.abs(i-j)!=a.length-1)){
                     index_i=i;
                     index_j=j;
                     if(index_i+1==index_j-1){
@@ -144,7 +144,7 @@ public class Lesson_3 {
                         return false;
                     }
                 }
-                else if (a.length==3 && a[i]==b[j]){
+                else if ((a.length==3) && (a[i]==b[j])){
                     index_i=i;
                     index_j=j;
                     if(index_i+1==index_j-1){
