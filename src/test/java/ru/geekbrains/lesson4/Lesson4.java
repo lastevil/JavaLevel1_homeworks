@@ -16,8 +16,8 @@ public class Lesson4 {
     public static int lastTurnY;
     //счетчик ходов
     public static int counterPlayer;
-    public static final int SIZE = 5;
-    public static final int DOTS_TO_WIN = 4;
+    public static final int SIZE = 3;
+    public static final int DOTS_TO_WIN = 3;
 
     public static Scanner scanner;
     public static Random random;
@@ -109,24 +109,8 @@ public class Lesson4 {
         int m =arrayMax();
         do {
             if(counterPlayer<1){
-                if (lastTurnX == 0) {//ход AI при количестве ходов игрока <2
-                    x = Math.round(random.nextInt(2));
-                }
-                else if (lastTurnX == 2) {
-                    x = 1 + random.nextInt(lastTurnX);
-                }
-                else{
                     x = random.nextInt(SIZE);
-                }
-                if (lastTurnY == 0) {
-                    y = Math.round(random.nextInt(2));
-                }
-                else if (lastTurnY == 2) {
-                    y = 1 + random.nextInt(lastTurnY);
-                }
-                else{
                     y = random.nextInt(SIZE);
-                }
             }
             else{
                 if (m<((max.length/2)-2)){ //добавляем O в строку
@@ -138,25 +122,17 @@ public class Lesson4 {
                             y=i+1;
                             x=m;
                         }
-
-                        else if(map[m][i]!=DOT_EMPTY&&map[m][i+1]!=DOT_EMPTY){
-                            x = random.nextInt(SIZE);
-                            y = random.nextInt(SIZE);
-                        }
                     }
                 }
                 if ((m>=((max.length/2)-2)) && (m<((max.length)-2))){ //добавляем в столбец
+                   int m1=m-(max.length/2 - 1);
                     for (int i = 0; i <SIZE -1; i++) {
-                        if(map[i][m-SIZE]==DOT_EMPTY && map[i+1][m-SIZE]==DOT_X){
+                        if(map[i][m1]==DOT_EMPTY && map[i+1][m1]==DOT_X){
                             x=i;
-                            y=m-(SIZE);
-                        } else if(map[i][m-SIZE]==DOT_X && map[i+1][m-SIZE]==DOT_EMPTY){
+                            y=m1;
+                        } else if(map[i][m1]==DOT_X && map[i+1][m1]==DOT_EMPTY){
                             x=i+1;
-                            y=m-SIZE;
-                        }
-                        else if(map[i][m-SIZE]!=DOT_EMPTY&&map[m][i+1]!=DOT_EMPTY){
-                            x = random.nextInt(SIZE);
-                            y = random.nextInt(SIZE);
+                            y=m1;
                         }
                     }
                 }
@@ -169,13 +145,9 @@ public class Lesson4 {
                             x=i+1;
                             y=i+1;
                         }
-                        else if(max[m]>DOTS_TO_WIN-1){
-                            x = random.nextInt(SIZE);
-                            y = random.nextInt(SIZE);
-                        }
                     }
                 }
-                else{ //добавляем в вторую диагональ
+                else if (m==max.length-1){ //добавляем в вторую диагональ
                     for (int i = 0; i>SIZE-1; i--) {
                         if(map[f][i]==DOT_EMPTY && map[f+1][i-1]==DOT_X){
                             x=f;
@@ -183,10 +155,6 @@ public class Lesson4 {
                         } else if(map[f][i]==DOT_X && map[f+1][i-1]==DOT_EMPTY){
                             x=f+1;
                             y=i-1;
-                        }
-                        else if(max[m]>DOTS_TO_WIN-1){
-                            x = random.nextInt(SIZE);
-                            y = random.nextInt(SIZE);
                         }
                         f++;
                     }
@@ -350,11 +318,52 @@ public class Lesson4 {
         if (index1==index2){
         return index1;
         }
-        else
-            if(Math.round(Math.random() * 7)>3){
+        else if(Math.round(Math.random() * 7)>3){
                 index=index1;
-            }else
+            }else{
                 index=index2;
-            return index;
+            }
+            if(indexLineIsFull(index)==false){
+                index1=index2=0;
+                arrayMax();
+            }
+        return index;
+    }
+    //Проверка заполнености выбраной строки
+    private static boolean indexLineIsFull(int index){
+        //проверка столбца
+        int count =0;
+        if(index<((max.length/2)-1)){
+            for (int i = 0; i < SIZE; i++) {
+                if (map[index][i]==DOT_EMPTY){
+                    return true;
+                }
+            }
+        }
+        if ((index>=((max.length/2)-1)) && (index<((max.length)-2))) { //добавляем в столбец
+            for (int i = 0; i < SIZE; i++) {
+                if (map[i][index-(max.length/2 - 1)]==DOT_EMPTY){
+                    return true;
+                }
+            }
+        }
+        if ((index==((max.length)-2))) { //добавляем в столбец
+            for (int i = 0; i < SIZE; i++) {
+                if (map[i][i]==DOT_EMPTY){
+                    return true;
+                }
+            }
+        }
+        if ((index==((max.length)-1))) { //добавляем в столбец
+            for (int i = SIZE-1; i >0; i--) {
+                if (map[count][i]==DOT_EMPTY){
+                    return true;
+                }
+                count++;
+            }
+        }
+        max[index]=-100;
+        System.out.println(Arrays.toString(max));
+        return false;
     }
 }
