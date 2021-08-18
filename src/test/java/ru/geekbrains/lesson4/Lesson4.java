@@ -101,6 +101,7 @@ public class Lesson4 {
         } while (!checkTurn(x, y));
         map[x][y] = DOT_X;
         counterPlayer++;
+        makeArraysWeight();
     }
     //ход машины
     private static void turnAI() {
@@ -112,6 +113,7 @@ public class Lesson4 {
         } while(!checkTurnAI(x, y));
     System.out.println("Компьютер походил в точку "+(x +1)+" "+(y +1));
     map[x][y]=DOT_O;
+        clearArraysWeight();
     }
     //проверка хода
     private static boolean checkTurn(int x, int y) {
@@ -264,7 +266,25 @@ public class Lesson4 {
         return false;
     }
     //наполняем весы для столбцов
-    private static void addArraysColumns(){
+    private static void makeArraysWeight(){
+        addArraysColumns(true);
+        addArraysLines(true);
+        addArraysMainDiagonals(true);
+        addArraysSecondDiagonals(true);
+
+        System.out.println("Массив столбцов: "+Arrays.toString(columns));
+        System.out.println("Массив строк: "+Arrays.toString(lines));
+        System.out.println("Массив главных диагоналей: "+Arrays.toString(mainDiagonals));
+        System.out.println("Массив побочных диагоналей: "+Arrays.toString(secondDiagonals));
+    }
+    //очистка весов
+    private static void clearArraysWeight(){
+        addArraysColumns(false);
+        addArraysLines(false);
+        addArraysMainDiagonals(false);
+        addArraysSecondDiagonals(false);
+    }
+    private static void addArraysColumns(boolean clear){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (map[j][i]==DOT_X){
@@ -272,11 +292,14 @@ public class Lesson4 {
                 } else if (map[j][i]==DOT_O){
                     columns[i]--;
                 }
+                if(clear == false){
+                    columns[i]=0;
+                }
             }
 
         }
     }
-    private static void addArraysLines(){
+    private static void addArraysLines(boolean clear){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (map[i][j]==DOT_X){
@@ -284,11 +307,14 @@ public class Lesson4 {
                 } else if (map[i][j]==DOT_O){
                     lines[i]--;
                 }
+                if (clear == false){
+                    lines[i]=0;
+                }
             }
 
         }
     }
-    private static void addArraysMainDiagonals(){
+    private static void addArraysMainDiagonals(boolean clear){
         int a=SIZE-DOTS_TO_WIN;
         for (int i = 0; i <=a; i++) {
             for (int j = 0; j < SIZE-i; j++) {
@@ -297,19 +323,56 @@ public class Lesson4 {
                 }else if(map[j][j+i]==DOT_O){
                     mainDiagonals[i]--;
                 }
+                if (clear == false){
+                    mainDiagonals[i]=0;
+                }
             }
         }
         for (int i = 1; i <=a ; i++) {
             for (int j = 0; j < SIZE-i; j++) {
-                if (map[j-i][j]==DOT_X){
+                if (map[j+i][j]==DOT_X){
                     mainDiagonals[a+i]++;
-                }else if(map[j-1][j]==DOT_O){
+                }else if(map[j+i][j]==DOT_O){
                     mainDiagonals[a+i]--;
+                }
+                if (clear == false){
+                    mainDiagonals[a+i]=0;
                 }
             }
 
         }
 
     }
-    private static void addArraysSecondDiagonals(){}
+    private static void addArraysSecondDiagonals(boolean clear){
+        int a=SIZE-DOTS_TO_WIN;
+        int column = SIZE - 1;
+        for (int i = 0; i <=a; i++) {
+            for (int j = 0; j < SIZE-i; j++) {
+                if(map[j][column - i]==DOT_X){
+                    secondDiagonals[i]++;
+                }else if(map[j][column - i]==DOT_O){
+                    secondDiagonals[i]--;
+                } if(clear==false){
+                    secondDiagonals[i]=0;
+                }
+                column--;
+            }
+            column = SIZE - 1;
+        }
+        column = SIZE - 1;
+        for (int i = 1; i <=a ; i++) {
+            for (int j = 0; j < SIZE-i; j++) {
+                if (map[j+i][column]==DOT_X){
+                    secondDiagonals[a+i]++;
+                }else if(map[j+i][column]==DOT_O){
+                    secondDiagonals[a+i]--;
+                } if(clear==false){
+                    secondDiagonals[a+i]=0;
+                }
+                column--;
+            }
+            column = SIZE - 1;
+        }
+    }
+
 }
