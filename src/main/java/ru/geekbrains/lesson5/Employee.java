@@ -27,7 +27,11 @@ public class Employee {
         this.age=0;
     }
     }
-    public void info(){
-        System.out.println(FIO+" "+ post+" "+email+" "+telephone+" "+salary+" "+age);
+    public void info() {
+        System.out.println(FIO + " " + post + " " + email + " " + telephone + " " + salary + " " + age);
+    }
+
+    public int getAge() {
+        return age;
     }
 }
